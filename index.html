@@ -1,0 +1,57 @@
+<html>
+<link rel="stylesheet" href="./styles/main.css">
+
+<body>
+    <!-- navbar -->
+    <nav class="header-nav col-100">
+        <div class="d-flex container align-items-center h-100 ">
+            pixel editor
+        </div>
+    </nav>
+
+    <!-- main -->
+    <div class="container content-container">
+        <div class="d-flex">
+            <div class="col-20">
+                <div class="hexa-color" id="colorLabel"></div>
+            </div>
+            <div class="col-10"></div>
+            <div class="col-70">
+                <div class="grid-size">
+                    <div id="sizePicker">
+                        <input type="number" id="inputRows" name="rows" min="1" max="100"><span class="input-separator">X</span>
+                        <input type="number" id="inputColumns" name="columns" min="1" max="100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div class="col-20">
+                <div class="color-picker">
+                    <input type="range" name="colorSlider" id="colorSlider" min="0" max="360">
+                </div>
+            </div>
+            <div class="col-10"></div>
+            <div class="col-70">
+                <div class="paper">
+                    <table id="pixelTable"></table>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex footer-button">
+
+            <button id="downloadPrintedTable" class="print-button">
+                <img class="button-icon" src="images/download-icon.png">
+                Download</button>
+
+        </div>
+
+    </div>
+    <canvas id="pixelCanvas" hidden></canvas>
+
+    <script src="./index.js"></script>
+    <style data="customCSS" type="text/css"></style>
+
+</body>
+
+</html>
