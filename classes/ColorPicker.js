@@ -1,9 +1,9 @@
 export default class ColorPicker {
-    constructor(sliderEl, colorLabelEl, hue = 180) {
+    constructor(sliderEl, colorLabelEl, saturation = 100, luminance = 50, hue = 180) {
         this.selectedHSL = {
             H: hue,
-            S: 100,
-            L: 50
+            S: saturation,
+            L: luminance > 80 ? 80 : luminance,
         }
         this.selectedRGB = {
             R: undefined,
@@ -36,7 +36,7 @@ export default class ColorPicker {
         let G = this.convertRgbFromHue(m1, m2, h);
         let B = this.convertRgbFromHue(m1, m2, h - 1 / 3);
 
-        /* set RGB */
+        // set RGB
         this.selectedRGB.R = Math.round(R * 255);
         this.selectedRGB.G = Math.round(G * 255);
         this.selectedRGB.B = Math.round(B * 255);
@@ -61,7 +61,7 @@ export default class ColorPicker {
     }
     setSliderBackgroundColor() {
         this.colorSlider.style.backgroundColor = "rgb(" + this.selectedRGB.R + "," + this.selectedRGB.G + "," + this.selectedRGB.B + ")";
-        //refactoring removing dynamic s, l
+
         this.setGradient(this.colorSlider, [
             this.convertToHSLFormat(0, this.selectedHSL.S, this.selectedHSL.L),
             this.convertToHSLFormat(60, this.selectedHSL.S, this.selectedHSL.L),
@@ -111,10 +111,12 @@ export default class ColorPicker {
         this.setHexFromRbg();
 
         let hex = this.convertToHEXFormat();
+        //apply selected color to slider thumb
         let style = document.querySelector('[data="customCSS"]');
         style.innerHTML = `input[type=range]::-webkit-slider-thumb { background-color: ${hex} !important; } input[type=range]::-moz-range-thumb{ background-color: ${hex} !important;} input[type=range]::-ms-thumb{background-color: ${hex} !important;}`
+            //apply selected color to colorLabel
         this.colorLabel.style.backgroundColor = hex;
-
+        //update text label with selected hexadecimal
         this.updateHexColorLabel();
     }
     updateHexColorLabel() {

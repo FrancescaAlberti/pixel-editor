@@ -1,5 +1,5 @@
 export default class PaintingGrid {
-    constructor(paintingGridEl, canvasEl, squareSide = 10, paintingGridSize = 500) {
+    constructor(paintingGridEl, canvasEl, squaresPerSide = 10, paintingGridSize = 500) {
         this.paintingGridEl = paintingGridEl;
         this.paintingGridSize = paintingGridSize;
         this.paintingGridEl.style.width = paintingGridSize;
@@ -7,18 +7,16 @@ export default class PaintingGrid {
         this.canvasEl = canvasEl;
         this.canvasEl.width = paintingGridSize;
         this.canvasEl.height = paintingGridSize;
-        this.squareSide = squareSide;
+        this.squaresPerSide = squaresPerSide;
         this.makeGrid()
     }
 
-    /* getters */
-    getSquareSide() {
-        return this.squareSide;
+    getSquaresPerSide() {
+        return this.squaresPerSide;
     }
 
-    /* setters */
-    setSquareSide(squareSire) {
-        this.squareSide = squareSide;
+    setSquareSide(squaresPerSide) {
+        this.squaresPerSide = squaresPerSide;
     }
 
     makeGrid() {
@@ -27,9 +25,9 @@ export default class PaintingGrid {
 
         // draw table    
         let tableBody = document.createElement("tbody");
-        for (let i = 0; i < this.squareSide; i++) {
+        for (let i = 0; i < this.squaresPerSide; i++) {
             let row = document.createElement("tr");
-            for (let i = 0; i < this.squareSide; i++) {
+            for (let i = 0; i < this.squaresPerSide; i++) {
                 let cell = document.createElement("td");
                 row.appendChild(cell);
             }
@@ -56,19 +54,19 @@ export default class PaintingGrid {
 
     drawCanvas() {
         let canvasContext = this.canvasEl.getContext("2d");
-        let cellSize = this.paintingGridSize / this.squareSide;
+        let cellSize = this.paintingGridSize / this.squaresPerSide;
         canvasContext.clearRect(0, 0, this.paintingGridSize, this.paintingGridSize);
         canvasContext.save();
         let myTableColorsArray = this.getTableColorsArray();
-        for (let y = 0; y < this.squareSide; y++) {
-            for (let x = 0; x < this.squareSide; x++) {
+        for (let y = 0; y < this.squaresPerSide; y++) {
+            for (let x = 0; x < this.squaresPerSide; x++) {
                 canvasContext.fillStyle = myTableColorsArray[y][x] ? myTableColorsArray[y][x] : '#FFF';
                 canvasContext.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
             }
         }
     }
 
-    printCanvas() {
+    printCanvas(fileName) {
         // draw a canvas based on the table and print as png
         this.drawCanvas();
 
@@ -78,7 +76,7 @@ export default class PaintingGrid {
         let imgURL = this.canvasEl.toDataURL(MIME_TYPE);
 
         let dlLink = document.createElement('a');
-        dlLink.download = 'printed-canvas';
+        dlLink.download = fileName;
         dlLink.href = imgURL;
         dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
 
