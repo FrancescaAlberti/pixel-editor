@@ -76,7 +76,7 @@ export default class PaintingGrid {
         let imgURL = this.canvasEl.toDataURL(MIME_TYPE);
 
         let dlLink = document.createElement('a');
-        dlLink.download = fileName;
+        dlLink.download = `${fileName}.png`;
         dlLink.href = imgURL;
         dlLink.dataset.downloadurl = [MIME_TYPE, dlLink.download, dlLink.href].join(':');
 
